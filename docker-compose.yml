@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  surfshark-wireguard:
+    build: .
+    container_name: surfshark-wireguard
+    environment:
+      - SURFSHARK_USER=youremail
+      - SURFSHARK_PASSWORD=yourpassword
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    # sysctls:
+    # - net.ipv4.conf.all.src_valid_mark=1
+    # privileged: true
+    #  volumes:
+    # - /path/to/appdata/config:/config
+    # - /lib/modules:/lib/modules
+    devices:
+      - /dev/net/tun
+    # ports:
+    # - 8080:8080 #We open here the port for qbittorrent
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+    network_mode: host # enable vpn on host machine
+
+
+  # qbittorrent:
+  #   image: ghcr.io/linuxserver/qbittorrent
+  #   container_name: qbittorrent
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #     - WEBUI_PORT=8080
+  #   # volumes:
+  #   #   - /path/to/appdata/config:/config
+  #   #   - /path/to/downloads:/downloads
+  #   depends_on:
+  #     - vpn
+  #   network_mode: service:vpn
+  #   restart: unless-stopped
