@@ -2,8 +2,13 @@ import Surfshark from "./surfShark";
 import Wireguard, { WgConfigObject } from "./wireGuard";
 import ipCheck from "./ipCheck";
 import settings from './settings';
+import Firewall from "./firewall";
 
 const main = async () => {
+
+  const firewall = new Firewall()
+  firewall.enableLan()
+
   const surfshark = new Surfshark();
   const wireguard = new Wireguard();
 

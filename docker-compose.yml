@@ -7,36 +7,33 @@ services:
     environment:
       - SURFSHARK_USER=${SURFSHARK_USER}
       - SURFSHARK_PASSWORD=${SURFSHARK_PASSWORD}
+      - NETWORK=192.168.100.0/24
     cap_add:
       - NET_ADMIN
-      - SYS_MODULE
-    # sysctls:
-    # - net.ipv4.conf.all.src_valid_mark=1
-    # privileged: true
-    # volumes:
-    #   - /path/to/appdata/config:/config
-    #   - /lib/modules:/lib/modules
-    devices:
-      - /dev/net/tun
     ports:
-      - 8080:8080 #open port for qbittorrent
+      - 9091:9091
+      - 51413:51413
     restart: always
-    dns:
-      - 1.1.1.1
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
     # network_mode: host # enable vpn on host machine
 
-  qbittorrent:
-    image: ghcr.io/linuxserver/qbittorrent
-    container_name: qbittorrent
+  transmission:
+    image: lscr.io/linuxserver/transmission
+    container_name: transmission
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Sao_Paulo
-      - WEBUI_PORT=8080
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=admin #optional
+      - PASS=admin #optional
+      - WHITELIST=*.*.*.* #optional
+      # - HOST_WHITELIST=dnsnane list #optional
     volumes:
-      #   - /path/to/appdata/config:/config
+      - ./config:/config
       - /mnt/Server/Media:/downloads
+    network_mode: service:surfshark-wireguard
     depends_on:
       - surfshark-wireguard
-    network_mode: service:surfshark-wireguard
-    restart: always
+    restart: unless-stopped

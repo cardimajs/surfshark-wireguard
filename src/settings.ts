@@ -13,5 +13,8 @@ export default {
   },
   get surfsharkPassword(): string {
     return process.env.SURFSHARK_PASSWORD || ""
+  },
+  get network(): string {
+    return process.env.NETWORK || ""
   }
 };
