@@ -33,9 +33,9 @@ services:
       - PGID=1000
       - TZ=America/Sao_Paulo
       - WEBUI_PORT=8080
-    # volumes:
-    #   - /path/to/appdata/config:/config
-    #   - /path/to/downloads:/downloads
+    volumes:
+      #   - /path/to/appdata/config:/config
+      - /mnt/Server/Media:/downloads
     depends_on:
       - surfshark-wireguard
     network_mode: service:surfshark-wireguard
