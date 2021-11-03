@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.14
 
 # install dependencies
 RUN apk add --update --no-cache wireguard-tools wireguard-tools-wg nodejs npm 
@@ -17,8 +17,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm run build
+RUN npm install
 
-WORKDIR /usr/src/app/dist
+RUN npm run build
 
 CMD ["npm", "start"]
