@@ -1,8 +1,6 @@
 # Surfshark Wireguard
 
-<h4 align="center">
-	🚧   🚀 Under Development  🚧
-</h4>
+Allows the use of Surfshark VPN with wireguard protocol in linux or docker container
 
 ### ⚒️ Technologies
 
