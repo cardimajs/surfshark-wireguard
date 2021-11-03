@@ -45,4 +45,4 @@ main();
 setInterval(async () => {
   const ip = await ipCheck();
   console.log("My ip: ", ip);
-}, 15000)
+}, 60000)
