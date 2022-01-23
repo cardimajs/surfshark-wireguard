@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM alpine:3.15
 
 # install dependencies
 RUN apk add --update --no-cache wireguard-tools wireguard-tools-wg nodejs npm yarn
