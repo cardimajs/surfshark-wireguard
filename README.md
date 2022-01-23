@@ -10,14 +10,14 @@ Allows the use of Surfshark VPN with wireguard protocol in linux or docker conta
 ### 🎲 Runing using docker
 
 ```bash
-# Edit docker-compose.yml and set your credentials
+# create .env file based on .example.env using your credentials
 $ docker-compose up
 ```
 
 ### 🎲 Runing
 
 ```bash
-# Edit docker-compose.yml and set your credentials
+# create .env file based on .example.env using your credentials
 $ yarn install
 $ yarn build
 $ yarn start
