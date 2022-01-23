@@ -1,13 +1,12 @@
 import Surfshark from "./surfShark";
 import Wireguard, { WgConfigObject } from "./wireGuard";
 import ipCheck from "./ipCheck";
-import settings from './settings';
+import settings from "./settings";
 import Firewall from "./firewall";
 
 const main = async () => {
-
-  const firewall = new Firewall()
-  firewall.enableLan()
+  const firewall = new Firewall();
+  firewall.enableLan();
 
   const surfshark = new Surfshark();
   const wireguard = new Wireguard();
@@ -19,7 +18,8 @@ const main = async () => {
 
   await surfshark.loadServers();
 
-  const p2pServers = surfshark.getServersIncludingTags(['p2p', 'physical']);
+  const p2pServers = surfshark.getServersIncludingTags(["p2p", "physical"]);
+
   const selectedServer = p2pServers[0];
   console.log(selectedServer);
 
@@ -42,12 +42,12 @@ const main = async () => {
   await wireguard.setConfig(wireGuardConfig);
   await surfshark.sendPublicKey(wireguard?.myPublickey); //send public key
   await wireguard.restart();
+  // await wireguard.disconnect();
 };
 
 main();
 
-
 setInterval(async () => {
   const ip = await ipCheck();
   console.log("My ip: ", ip);
-}, 60000)
+}, 15000);
