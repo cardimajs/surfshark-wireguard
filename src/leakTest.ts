@@ -1,13 +1,5 @@
 import axios from 'axios'
-
-const getRandomCharFromAlphabet = (alphabet: string): string => {
-  return alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-}
-
-const randomString = (size: number = 10) => {
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz'
-  return Array.from({length:size}).map( () => {return getRandomCharFromAlphabet(alphabet)}).join("")
-}
+import {randomString} from './utils'
 
 const dnsLeakTest = async (): Promise<boolean> => {
   const randomText = randomString(50)
@@ -27,4 +19,17 @@ const ipCheck = async (): Promise<boolean> => {
   return !response.data.secured
 }
 
-export { dnsLeakTest }
+const testLeaks = async () => {
+  const promises = [
+    dnsLeakTest(),
+    ipCheck()
+  ]
+
+  const result = await Promise.all(promises)
+  return {
+    dns: result[0],
+    ip: result[1]
+  }
+}
+
+export { dnsLeakTest, ipCheck, testLeaks }

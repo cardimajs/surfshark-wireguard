@@ -89,6 +89,9 @@ class SurfShark {
 
     const data = res.data;
 
+    console.log('login response data')
+    console.log(data)
+
     this.token = data.token;
     this.renewToken = data.renewToken;
 

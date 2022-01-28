@@ -24,7 +24,10 @@ $ yarn start
 ```
 
 ### Tasks
-
-- [ ] Disconnect
-- [ ] Select server
+- [x] HTTP API
+- [x] Disconnect
+- [x] change server
 - [ ] Kill Switch
+- [ ] Proxy
+- [ ] Store User Info
+- [x] Leak test
