@@ -22,30 +22,30 @@ const startSurfshark = async () => {
 
   await surfshark.loadServers();
 
-  // const p2pServers = surfshark.getServersIncludingTags(["p2p", "physical"]);
+  const p2pServers = surfshark.getServersIncludingTags(["p2p", "physical"]);
 
-  // const selectedServer = p2pServers[0];
-  // console.log(selectedServer);
+  const selectedServer = p2pServers[0];
+  console.log(selectedServer);
 
-  // const wireGuardConfig: WgConfigObject = {
-  //   wgInterface: {
-  //     address: ["10.14.0.2/8"],
-  //     privateKey: wireguard?.myPrivateKey,
-  //     mtu: 1420,
-  //   },
-  //   peers: [
-  //     {
-  //       allowedIps: ["0.0.0.0/0"],
-  //       endpoint: `${selectedServer?.hostname}:${selectedServer?.wireguard?.port}`,
-  //       publicKey: selectedServer?.wireguard?.publicKey,
-  //       persistentKeepalive: 25,
-  //     },
-  //   ],
-  // };
+  const wireGuardConfig: WgConfigObject = {
+    wgInterface: {
+      address: ["10.14.0.2/8"],
+      privateKey: wireguard?.myPrivateKey,
+      mtu: 1420,
+    },
+    peers: [
+      {
+        allowedIps: ["0.0.0.0/0"],
+        endpoint: `${selectedServer?.hostname}:${selectedServer?.wireguard?.port}`,
+        publicKey: selectedServer?.wireguard?.publicKey,
+        persistentKeepalive: 25,
+      },
+    ],
+  };
 
-  // await wireguard.setConfig(wireGuardConfig);
-  // await surfshark.sendPublicKey(wireguard?.myPublickey); //send public key
-  // await wireguard.restart();
+  await wireguard.setConfig(wireGuardConfig);
+  await surfshark.sendPublicKey(wireguard?.myPublickey); //send public key
+  await wireguard.restart();
 }
 
 server.get('/servers', async (request, reply) => {
@@ -72,7 +72,10 @@ server.get('/disconnect', async (request, reply) => {
 
 server.get('/connect/:serverHostname', async (request, reply) => {
   const { serverHostname } = request.params as any
+  console.log("CONNECT TO => ", serverHostname)
   const selectedServer = surfshark.getServers().find( server => server.hostname === serverHostname)
+
+  console.log(selectedServer)
 
   if(!selectedServer) {
     return { error: 'server not found!'}
@@ -95,7 +98,7 @@ server.get('/connect/:serverHostname', async (request, reply) => {
   };
 
   await wireguard.setConfig(wireGuardConfig);
-  await surfshark.sendPublicKey(wireguard?.myPublickey); //send public key
+  // await surfshark.sendPublicKey(wireguard?.myPublickey); //send public key
   await wireguard.restart();
   return  selectedServer
 })
