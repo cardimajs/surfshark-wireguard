@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  surfshark-wireguard-host:
+    build: .
+    container_name: surfshark-wireguard
+    environment:
+      - SURFSHARK_USER=${SURFSHARK_USER}
+      - SURFSHARK_PASSWORD=${SURFSHARK_PASSWORD}
+    cap_add:
+      - NET_ADMIN
+    restart: always
+    network_mode: host
